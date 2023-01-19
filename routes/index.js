@@ -47,7 +47,7 @@ router.get('/api/secret', checkAuthenticated, (req,res,next) => {
 
 router.post("/api/user/register",
   body("username").trim().escape(),
-  body("password")),
+  body("password"),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
