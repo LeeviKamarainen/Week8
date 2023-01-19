@@ -5,10 +5,8 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require("mongoose");
 const {body, validationResult} = require('express-validator');
-const User = require("../models/Users");
 const passport = require("passport");
 
-const validateToken = require('../auth/validateToken.js')
 
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
@@ -21,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/api/user/register', checkNotAuthenticated, (req, res, next) => {
+router.get('/api/user/register', checkAuthenticated, (req, res, next) => {
   res.render('register')
 });
 
@@ -95,7 +93,7 @@ function getUserByID(id) {
 
 function checkAuthenticated(req,res,next) {
   if(req.isAuthenticated()) {
-      return res.status(200)
+      returnres.status(200)
   }
 
   res.status(401).send('User not authenticated')
