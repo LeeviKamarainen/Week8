@@ -11,7 +11,7 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [];
+const users = [{"id":1674162150295,"username":"test123","password":"$2a$10$tIaeDn160YB9HGqsUtvT3uWhpTRv7ysHFHxM8I86.km56qmqSf0Um"}];
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -41,8 +41,7 @@ router.get('/api/user/list', (req, res, next) => {
 });
 
 router.get('/api/secret', checkAuthenticated, (req,res,next) => {
-  
-
+  res.send('This is a secret.')
 })
 
 router.post("/api/user/register",
@@ -96,9 +95,9 @@ function getUserByID(id) {
 
 function checkAuthenticated(req,res,next) {
   if(req.isAuthenticated()) {
-      returnres.status(200)
+    res.status(200)
+    return next()
   }
-
   res.status(401).send('User not authenticated')
 }
 function checkNotAuthenticated(req,res,next) {
