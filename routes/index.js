@@ -11,7 +11,7 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [{"id":1674162150295,"username":"test123","password":"$2a$10$tIaeDn160YB9HGqsUtvT3uWhpTRv7ysHFHxM8I86.km56qmqSf0Um"}];
+const users = [];
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -29,7 +29,7 @@ router.get('/api/user/login', checkNotAuthenticated, (req, res, next) => {
 
 });
 
-router.post('/api/user/login', passport.authenticate('local', {
+router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('local', {
 }), (req,res) => {
   res.status(200).send(req.cookies['connect.sid'])
 }
@@ -44,7 +44,7 @@ router.get('/api/secret', checkAuthenticated, (req,res,next) => {
   res.send('This is a secret.')
 })
 
-router.post("/api/user/register",
+router.post("/api/user/register", checkNotAuthenticated,
   body("username").trim().escape(),
   body("password"),
   (req, res, next) => {
