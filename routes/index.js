@@ -56,15 +56,18 @@ router.post("/api/user/register",
     }
     let userFound = 0;
     for (let index = 0; index < users.length; index++) {
-      if(users[index] == req.body.username) {
+      console.log(req.body.username)
+      console.log
+      if(users[index].username == req.body.username) {
         userFound = 1;
+        console.log("User exists already.")
         break
       }
     }
-      console.log("Adding new user");
       if(userFound == 1) {
-        return res.status(400).json({username: "Username already in use."})
+        return res.status(400).json({message: "Username already in use."})
       } else {
+        console.log("Adding new user");
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(req.body.password, salt, (err,hash) => {
             if(err) throw err;
