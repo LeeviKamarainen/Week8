@@ -11,7 +11,7 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [{"username":"test123","password":"$2a$10$.elcG9VTzfixsG5RnyS3QuvCcUYi/SzPoculqpFv5S8VTc9ZbcZs.","id":4726}];
+const users = [];
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/api/user/register', checkAuthenticated, (req, res, next) => {
+router.get('/api/user/register', checkNotAuthenticated, (req, res, next) => {
   res.render('register')
 });
 
@@ -46,8 +46,8 @@ router.get('/api/secret', checkAuthenticated, (req,res,next) => {
 })
 
 router.post("/api/user/register",
-  body("username").isLength({min: 3}).trim().escape(),
-  body("password").isLength({min: 5}),
+  body("username").trim().escape(),
+  body("password")),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -70,9 +70,9 @@ router.post("/api/user/register",
             if(err) throw err;
             let user =
               {
+                id: Date.now(),
                 username: req.body.username,
-                password: hash,
-                id: Date.now()
+                password: hash
               }
             users.push(user)
                 res.json(user);
