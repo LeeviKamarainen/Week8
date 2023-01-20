@@ -11,7 +11,10 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [];
+const users = [{
+  "username": "user",
+  "password": "password"
+}];
 
 const todos = [];
 
@@ -37,8 +40,7 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 }
 )
 
-router.post('/api/todos', checkAuthenticated, passport.authenticate('local', {
-}), (req,res) => {
+router.post('/api/todos', checkAuthenticated,  (req,res) => {
 
   todobody = req.body.todo;
   todojson = {
@@ -59,7 +61,7 @@ router.post('/api/todos', checkAuthenticated, passport.authenticate('local', {
     todos.push(todojson)
     res.send(todojson)
   } else {
-    res.send(todos[index])
+    res.send(todos[foundindex])
   }
 }
 )
