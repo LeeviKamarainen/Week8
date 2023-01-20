@@ -13,6 +13,8 @@ initializePassport(passport, getUserByUsername, getUserByID)
 
 const users = [];
 
+const todos = [];
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('index', { title: 'Express' });
@@ -34,6 +36,38 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
   res.status(200).send(req.cookies['connect.sid'])
 }
 )
+
+router.post('/api/todos', checkAuthenticated, passport.authenticate('local', {
+}), (req,res) => {
+
+  todobody = req.body.todo;
+  todojson = {
+    "id": req.user.id,
+    "todo": [req.body.todo]
+  }
+  let foundflag = 0;
+  let foundindex = 0;
+  for (let index = 0; index < todos.length; index++) {
+    const element = todos[index];
+    if(element.id == todojson.id) {
+      todos[index].todo.push(todobody)
+      foundflag = 1;
+      foundindex = index;
+    }
+  }
+  if(foundflag == 0) {
+    todos.push(todojson)
+    res.send(todojson)
+  } else {
+    res.send(todos[index])
+  }
+}
+)
+
+router.get('/api/todos/list', (req, res, next) => {
+  res.send(todos)
+
+});
 
 router.get('/api/user/list', (req, res, next) => {
   res.send(users)
