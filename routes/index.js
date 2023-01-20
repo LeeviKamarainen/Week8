@@ -11,10 +11,7 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [{
-  "username": "user",
-  "password": "password"
-}];
+const users = [];
 
 const todos = [];
 
