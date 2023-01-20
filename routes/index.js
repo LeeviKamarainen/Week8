@@ -11,10 +11,7 @@ const passport = require("passport");
 const initializePassport = require('../passport-config')
 initializePassport(passport, getUserByUsername, getUserByID)
 
-const users = [{
-  "username": "user",
-  "password": "password"
-}];
+const users = [];
 
 const todos = [];
 
@@ -66,7 +63,7 @@ router.post('/api/todos', checkAuthenticated,  (req,res) => {
 }
 )
 
-router.get('/api/todos/list', (req, res, next) => {
+router.get('/api/todos/list', checkAuthenticated, (req, res, next) => {
   res.send(todos)
 
 });
