@@ -38,8 +38,10 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 )
 
 router.post('/api/todos', checkAuthenticated,  (req,res) => {
-
   todobody = req.body.todo;
+  if(todobody == null) {
+    res.status(401).send("Body was empty")
+  } else {
   todojson = {
     "id": req.user.id,
     "todo": [req.body.todo]
@@ -61,6 +63,7 @@ router.post('/api/todos', checkAuthenticated,  (req,res) => {
   } else {
     console.log("Todo added: "+JSON.stringify(todos[foundindex]))
     res.send(todos[foundindex])
+  }
   }
 }
 )
