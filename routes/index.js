@@ -56,10 +56,10 @@ router.post('/api/todos', checkAuthenticated,  (req,res) => {
   }
   if(foundflag == 0) {
     todos.push(todojson)
-    console.log("Todo added: "+todojson)
+    console.log("Todo added: "+JSON.stringify(todojson))
     res.send(todojson)
   } else {
-    console.log("Todo added: "+todos[foundindex])
+    console.log("Todo added: "+JSON.stringify(todos[foundindex]))
     res.send(todos[foundindex])
   }
 }
