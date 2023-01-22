@@ -38,12 +38,19 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 )
 
 router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
+  if(req.body == null) {
+    todojson = {
+      "id": req.user.id,
+      "todo": "test"
+    }
+  } else{
   todobody = req.body.todo;
   console.log(req.user)
   todojson = {
     "id": req.user.id,
     "todo": [todobody]
   }
+}
   let foundflag = 0;
   let foundindex = 0;
   for (let index = 0; index < todos.length; index++) {
@@ -130,7 +137,6 @@ function getUserByID(id) {
 
 function checkAuthenticated(req,res,next) {
   if(req.isAuthenticated()) {
-    console.log(req)
     return next()
   }
   res.status(401).send('User not authenticated')
