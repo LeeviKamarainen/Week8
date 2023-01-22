@@ -37,7 +37,7 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 }
 )
 
-router.post('/api/todos',  checkAuthenticated,  (req,res) => {
+router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
   todobody = req.body.todo;
   console.log(req.user)
   todojson = {
@@ -130,7 +130,7 @@ function getUserByID(id) {
 
 function checkAuthenticated(req,res,next) {
   if(req.isAuthenticated()) {
-    console.log(req.body)
+    console.log(req)
     return next()
   }
   res.status(401).send('User not authenticated')
