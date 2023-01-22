@@ -38,25 +38,19 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 )
 
 router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
-  if(req.body == null) {
-    todojson = {
-      "id": req.user.id,
-      "todo": ["test"]
-    }
-  } else{
-  todobody = "test";
+
+  todobody = req.body.todo;
   console.log(req.user)
   todojson = {
     "id": req.user.id,
-    "todo": ["test"]
+    "todos": [todobody]
   }
-}
   let foundflag = 0;
   let foundindex = 0;
   for (let index = 0; index < todos.length; index++) {
     const element = todos[index];
     if(element.id == todojson.id) {
-      todos[index].todo.push(todobody)
+      todos[index].todos.push(todobody)
       foundflag = 1;
       foundindex = index;
     }
@@ -69,7 +63,7 @@ router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
     console.log("Todo added: "+JSON.stringify(todos[foundindex]))
     res.send(todos[foundindex])
   }
-  }
+}
 )
 
 router.get('/api/todos/list', (req, res, next) => {
