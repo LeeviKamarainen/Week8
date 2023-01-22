@@ -130,7 +130,6 @@ function getUserByID(id) {
 
 function checkAuthenticated(req,res,next) {
   if(req.isAuthenticated()) {
-    res.status(200)
     return next()
   }
   res.status(401).send('User not authenticated')
