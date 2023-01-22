@@ -44,7 +44,7 @@ router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
       "todo": ["test"]
     }
   } else{
-  todobody = req.body.todo;
+  todobody = "test";
   console.log(req.user)
   todojson = {
     "id": req.user.id,
