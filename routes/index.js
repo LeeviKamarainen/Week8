@@ -39,7 +39,7 @@ router.post('/api/user/login', checkNotAuthenticated, passport.authenticate('loc
 
 router.post('/api/todos', checkAuthenticated,  (req,res) => {
   todobody = req.body.todo;
-  console.log(todobody)
+  console.log(req.body)
   console.log(req.user)
   todojson = {
     "id": req.user.id,
