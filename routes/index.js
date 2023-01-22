@@ -48,7 +48,7 @@ router.post('/api/todos',  checkAuthenticated,  (req,res, next) => {
   console.log(req.user)
   todojson = {
     "id": req.user.id,
-    "todo": [todobody]
+    "todo": "test"
   }
 }
   let foundflag = 0;
